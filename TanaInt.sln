@@ -13,7 +13,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{26D99F13-FC41-47BF-98F8-07B6D907131F}"
 	ProjectSection(SolutionItems) = preProject
 		Files\tana-template.json = Files\tana-template.json
-		Files\README.md = Files\README.md
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
