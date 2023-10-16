@@ -24,5 +24,10 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Lambda tools install
+      run: dotnet tool install -g Amazon.Lambda.Tools
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Build + Deploy Lambda
+      if: success() || failure()
+      run: dotnet lambda deploy-function -pl TanaInt.Lambda TanaInt
