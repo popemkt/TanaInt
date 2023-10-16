@@ -4,7 +4,6 @@ using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.RuntimeSupport;
 using Amazon.Lambda.Serialization.SystemTextJson;
-using Google.Apis.Calendar.v3;
 using TanaInt.Api.Services;
 using TanaInt.Domain;
 

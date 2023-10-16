@@ -47,7 +47,7 @@ dotnet tool install -g Amazon.Lambda.Tools
 ```
 Deploy the function:
 ```shell
-cd TanaInt.Lambda/src/TanaInt.Lambda
+cd TanaInt.Lambda
 dotnet lambda deploy-function
 ```
 

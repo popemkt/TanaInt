@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TanaInt.Domain", "TanaInt.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TanaInt.Infrastructure", "TanaInt.Infrastructure\TanaInt.Infrastructure.csproj", "{CB5CCD32-E5D7-4D27-B09A-F2F7C5FF80C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TanaInt.Lambda", "TanaInt.Lambda\src\TanaInt.Lambda\TanaInt.Lambda.csproj", "{B1F16AE5-EB37-4A9D-86F3-03A0DF6FE5F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TanaInt.Lambda", "TanaInt.Lambda\TanaInt.Lambda.csproj", "{B1F16AE5-EB37-4A9D-86F3-03A0DF6FE5F5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{26D99F13-FC41-47BF-98F8-07B6D907131F}"
 	ProjectSection(SolutionItems) = preProject

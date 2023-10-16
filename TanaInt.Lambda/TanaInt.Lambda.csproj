@@ -12,23 +12,20 @@
         <PublishReadyToRun>true</PublishReadyToRun>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.6.0" />
         <PackageReference Include="Amazon.Lambda.RuntimeSupport" Version="1.8.7"/>
         <PackageReference Include="Amazon.Lambda.Core" Version="2.1.0"/>
         <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.3.1"/>
     </ItemGroup>
     <ItemGroup>
-        <Content Include="..\..\..\TanaInt.Api\credentials.json">
+        <Content Include="..\TanaInt.Api\credentials.json">
             <Link>credentials.json</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="..\..\..\TanaInt.Api\token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user">
+        <Content Include="..\TanaInt.Api\token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user">
             <Link>token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\..\..\TanaInt.Domain\TanaInt.Domain.csproj" />
-      <ProjectReference Include="..\..\..\TanaInt.Infrastructure\TanaInt.Infrastructure.csproj" />
     </ItemGroup>
     <ItemGroup>
       <None Update="aws-lambda-tools-defaults.json">
@@ -36,8 +33,7 @@
       </None>
     </ItemGroup>
     <ItemGroup>
-      <Reference Include="Amazon.Lambda.APIGatewayEvents">
-        <HintPath>..\..\..\..\..\.nuget\packages\amazon.lambda.apigatewayevents\2.6.0\lib\netcoreapp3.1\Amazon.Lambda.APIGatewayEvents.dll</HintPath>
-      </Reference>
+      <ProjectReference Include="..\TanaInt.Domain\TanaInt.Domain.csproj" />
+      <ProjectReference Include="..\TanaInt.Infrastructure\TanaInt.Infrastructure.csproj" />
     </ItemGroup>
 </Project>
