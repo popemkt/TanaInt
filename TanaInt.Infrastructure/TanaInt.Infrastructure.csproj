@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\TanaInt.Domain\TanaInt.Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Google.Apis.Calendar.v3" Version="1.62.0.3171" />
+    </ItemGroup>
+
+</Project>

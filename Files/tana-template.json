@@ -1,0 +1,9 @@
+{
+  "name": "${name}",
+  "date": "${Date}",
+  "id": "${sys:nodeId}",
+  "url": "${sys:nodeURL}",
+  "time": "${sys:currentDate}",
+  "context": "${sys:context}",
+  "refUrl": "${Ext Ref}"
+}
