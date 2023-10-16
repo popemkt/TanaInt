@@ -35,9 +35,34 @@ The API and Lambda function use a service account for Google Calendar API authen
 
 ## Deployment
 
-The API can be run locally and deployed as a Docker container.
+Currently we are only deploying zip manually
 
-The Lambda function can be deployed using Visual Studio or the .NET Lambda CLI tools.
+### Deploying with .NET Lambda Tools
+The [Amazon.Lambda.Tools](https://github.com/aws/aws-extensions-for-dotnet-cli#aws-lambda-amazonlambdatools) .NET Global Tool can be used to deploy the function from the command line.
+
+Install the Amazon.Lambda.Tools:
+
+```shell
+dotnet tool install -g Amazon.Lambda.Tools
+```
+Deploy the function:
+```shell
+cd TanaInt.Lambda/src/TanaInt.Lambda
+dotnet lambda deploy-function
+```
+
+This will package and deploy the function to AWS Lambda using the configuration in aws-lambda-tools-defaults.json (currently it will fail at deploy if unauthenticated, only the zip is created, which is enough).
+
+The configuration includes the target Lambda runtime, handler mapping, memory size, timeout, and IAM role.
+
+To update the configuration, edit aws-lambda-tools-defaults.json.
+
+To invoke the function:
+
+```shell
+dotnet lambda invoke-function <function-name>
+```
+Logs and other commands are available through `dotnet lambda help`.
 
 ## Configuration
 
