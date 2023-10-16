@@ -16,10 +16,7 @@ public class TanaTaskDto
     public TanaTaskDto ParseInput()
     {
         var lines = Context.Split("\n");
-        var dates = ParseDates(lines.First(l => l.Contains("- Date::")));
-        Start = dates.Start;
-        End = dates.End;
-
+        (Start, End) = ParseDates(lines.First(l => l.Contains("- Date::")));
         Id = string.IsNullOrWhiteSpace(RefString) ? null : ParseRefString(RefString);
         return this;
     }
@@ -37,7 +34,7 @@ public class TanaTaskDto
 
         var dates = match.Groups[1].Value.Substring(match.Groups[1].Value.IndexOf(":") + 1).Split("/");
         var start = DateTime.Parse(dates[0], CultureInfo.InvariantCulture);
-        var end = dates.Length > 2 ? DateTime.Parse(dates[1], CultureInfo.InvariantCulture) : start.AddMinutes(30);
+        var end = dates.Length > 1 ? DateTime.Parse(dates[1], CultureInfo.InvariantCulture) : start.AddMinutes(30);
         return (start, end);
     }
 

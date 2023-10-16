@@ -14,7 +14,6 @@ public interface IGCalService
 
 public class GCalService : IGCalService
 {
-
     /* Global instance of the scopes required by this quickstart.
      If modifying these scopes, delete your previously saved token.json/ folder. */
     static string[] Scopes = { CalendarService.Scope.CalendarEvents };
@@ -69,12 +68,16 @@ public class GCalService : IGCalService
 
         string calId = "f89c72dc48bd042b626e8abb6f4c7722b58f3d83d377330ec583dc584e32b88b@group.calendar.google.com";
         CalendarBaseServiceRequest<Event> request;
-        if (!string.IsNullOrWhiteSpace(dto.Id))
-            request = service.Events.Update(eventBody, calId, dto.Id);
+        if (string.IsNullOrWhiteSpace(dto.Id))
+            request = service.Events.Insert(eventBody, calId);
         else
         {
-            dto.Id = Guid.NewGuid().ToString();
-            request = service.Events.Insert(eventBody, calId);
+            var currentEvent = await service.Events.Get(calId, dto.Id).ExecuteAsync();
+
+            if (DateTimeOffset.Parse(currentEvent.Start.DateTimeRaw).Date == dto.Start.Date)
+                request = service.Events.Update(eventBody, calId, dto.Id);
+            else
+                request = service.Events.Insert(eventBody, calId);
         }
 
         var result = await request.ExecuteAsync();
