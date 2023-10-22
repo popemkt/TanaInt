@@ -58,16 +58,12 @@ public class GCalService : IGCalService
             Start = new()
             {
                 DateTimeRaw =
-                    dto.IsAllDay
-                        ? dto.Start.ToString("yyyy-MM-dd")
-                        : dto.Start.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00",
+                    dto.Start.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00",
             },
-            End = dto.End is null
-                ? default
-                : new()
-                {
-                    DateTimeRaw = dto.End.Value.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00",
-                },
+            End = new()
+            {
+                DateTimeRaw = dto.End.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00",
+            },
             Source = new Event.SourceData()
             {
                 Url = dto.Url
