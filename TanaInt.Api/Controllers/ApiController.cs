@@ -3,8 +3,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
-using TanaInt.Api.Services;
 using TanaInt.Domain;
+using TanaInt.Infrastructure.Services;
 
 namespace TanaInt.Api.Controllers;
 
@@ -24,11 +24,5 @@ public class ApiController : ControllerBase
         {
             return StatusCode((int)HttpStatusCode.InternalServerError);
         }
-    }
-
-    [HttpGet]
-    public string MockApi()
-    {
-        return "success";
     }
 }

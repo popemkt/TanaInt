@@ -5,7 +5,7 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using TanaInt.Domain;
 
-namespace TanaInt.Api.Services;
+namespace TanaInt.Infrastructure.Services;
 
 public interface IGCalService
 {
@@ -16,11 +16,14 @@ public class GCalService : IGCalService
 {
     /* Global instance of the scopes required by this quickstart.
      If modifying these scopes, delete your previously saved token.json/ folder. */
-    static string[] Scopes = { CalendarService.Scope.CalendarEvents };
-    static string ApplicationName = "TanaInt Sync Api";
-    private static readonly string TokenFileName = "Google.Apis.Auth.OAuth2.Responses.TokenResponse-user";
-    private static readonly string WritablePath = "/tmp";
-    private static readonly string CredentialsPath = "credentials.json";
+    private readonly string[] _scopes = { CalendarService.Scope.CalendarEvents };
+    private const string ApplicationName = "TanaInt Sync Api";
+    private const string TokenFileName = "Google.Apis.Auth.OAuth2.Responses.TokenResponse-user";
+    private const string WritablePath = "/tmp";
+    private const string CredentialsPath = "credentials.json";
+
+    private const string CalendarId =
+        "f89c72dc48bd042b626e8abb6f4c7722b58f3d83d377330ec583dc584e32b88b@group.calendar.google.com";
 
     public async Task<string> SyncEvent(TanaTaskDto dto)
     {
@@ -34,7 +37,7 @@ public class GCalService : IGCalService
             MoveToWritablePath();
             credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                 (await GoogleClientSecrets.FromStreamAsync(stream)).Secrets,
-                Scopes,
+                _scopes,
                 "user",
                 CancellationToken.None,
                 new FileDataStore(WritablePath, true));
@@ -54,31 +57,28 @@ public class GCalService : IGCalService
             Description = dto.Url,
             Start = new()
             {
-                DateTimeRaw = dto.Start.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00",
+                DateTimeRaw =
+                    dto.IsAllDay
+                        ? dto.Start.ToString("yyyy-MM-dd")
+                        : dto.Start.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00",
             },
-            End = new()
-            {
-                DateTimeRaw = dto.End.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00",
-            },
+            End = dto.End is null
+                ? default
+                : new()
+                {
+                    DateTimeRaw = dto.End.Value.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00",
+                },
             Source = new Event.SourceData()
             {
                 Url = dto.Url
             },
         };
 
-        string calId = "f89c72dc48bd042b626e8abb6f4c7722b58f3d83d377330ec583dc584e32b88b@group.calendar.google.com";
         CalendarBaseServiceRequest<Event> request;
         if (string.IsNullOrWhiteSpace(dto.Id))
-            request = service.Events.Insert(eventBody, calId);
+            request = service.Events.Insert(eventBody, CalendarId);
         else
-        {
-            var currentEvent = await service.Events.Get(calId, dto.Id).ExecuteAsync();
-
-            if (DateTimeOffset.Parse(currentEvent.Start.DateTimeRaw).Date == dto.Start.Date)
-                request = service.Events.Update(eventBody, calId, dto.Id);
-            else
-                request = service.Events.Insert(eventBody, calId);
-        }
+            request = service.Events.Update(eventBody, CalendarId, dto.Id);
 
         var result = await request.ExecuteAsync();
         return $"{result.HtmlLink}\n{result.Id}";

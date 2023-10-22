@@ -1,5 +1,5 @@
 using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
-using TanaInt.Api.Services;
+using TanaInt.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -4,8 +4,8 @@ using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.RuntimeSupport;
 using Amazon.Lambda.Serialization.SystemTextJson;
-using TanaInt.Api.Services;
 using TanaInt.Domain;
+using TanaInt.Infrastructure.Services;
 
 // The function handler that will be called for each Lambda event
 var handler = async (APIGatewayHttpApiV2ProxyRequest input, ILambdaContext context) =>
