@@ -13,6 +13,7 @@
 // limitations under the License.
 
 // [START calendar_quickstart]
+
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
@@ -26,7 +27,7 @@ namespace CalendarQuickstart
     {
         /* Global instance of the scopes required by this quickstart.
          If modifying these scopes, delete your previously saved token.json/ folder. */
-        static string[] Scopes = { CalendarService.Scope.CalendarEvents};
+        static string[] Scopes = { CalendarService.Scope.CalendarEvents };
         static string ApplicationName = "Google Calendar API .NET Quickstart";
 
         static void Main(string[] args)
@@ -49,6 +50,7 @@ namespace CalendarQuickstart
                         new FileDataStore(credPath, true)).Result;
                     Console.WriteLine("Credential file saved to: " + credPath);
                 }
+
                 // Create Google Calendar API service.
                 var service = new CalendarService(new BaseClientService.Initializer
                 {
@@ -57,21 +59,23 @@ namespace CalendarQuickstart
                 });
                 var insertEvent = new Event()
                 {
-                    Summary = "Test",
+                    Summary = "Test a",
                     Description = "Description",
                     Start = new EventDateTime()
                     {
-                        DateTimeRaw = "2023-10-13T21:00:00+07:00"
+                        Date = "2023-10-23"
                     },
                     End = new EventDateTime()
                     {
-                        DateTimeRaw = "2023-10-13T22:00:00+07:00"
-                    },
+                        Date = "2023-10-24"
+                    }
                 };
-                EventsResource.InsertRequest insertRequest = service.Events.Insert(insertEvent, "primary");
+                EventsResource.InsertRequest insertRequest = service.Events.Insert(insertEvent,
+                    "f89c72dc48bd042b626e8abb6f4c7722b58f3d83d377330ec583dc584e32b88b@group.calendar.google.com");
                 insertRequest.Execute();
                 // Define parameters of request.
-                EventsResource.ListRequest request = service.Events.List("primary");
+                EventsResource.ListRequest request = service.Events.List(
+                    "f89c72dc48bd042b626e8abb6f4c7722b58f3d83d377330ec583dc584e32b88b@group.calendar.google.com");
                 request.TimeMin = DateTime.Now;
                 request.ShowDeleted = false;
                 request.SingleEvents = true;
@@ -86,6 +90,7 @@ namespace CalendarQuickstart
                     Console.WriteLine("No upcoming events found.");
                     return;
                 }
+
                 foreach (var eventItem in events.Items)
                 {
                     string when = eventItem.Start.DateTime.ToString();
@@ -93,6 +98,7 @@ namespace CalendarQuickstart
                     {
                         when = eventItem.Start.Date;
                     }
+
                     Console.WriteLine("{0} ({1})", eventItem.Summary, when);
                 }
             }

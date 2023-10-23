@@ -17,7 +17,7 @@ public class TanaTaskDto
     public TanaTaskDto ParseInput()
     {
         var lines = Context.Split("\n");
-        (IsAllDay, Start, End) = ParseDates(lines.Last(l => l.Contains("- Date::")));
+        (IsAllDay, Start, End) = ParseDates(lines.Last(l => l.StartsWith("  - Date::")));
         Id = string.IsNullOrWhiteSpace(RefString) ? null : ParseRefString(RefString);
         return this;
     }
@@ -35,10 +35,10 @@ public class TanaTaskDto
 
         var dates = match.Groups[1].Value.Substring(match.Groups[1].Value.IndexOf(":") + 1).Split("/");
         var start = DateTime.Parse(dates[0], CultureInfo.InvariantCulture);
-        var isAllDay = (start - start.Date).Seconds == 0 && dates.Length == 1;
+        var isAllDay = (start - start.Date).TotalSeconds == 0 && dates.Length == 1;
         var end = dates.Length > 1
             ? DateTime.Parse(dates[1], CultureInfo.InvariantCulture)
-            : (isAllDay ? start : start.AddMinutes(30));
+            : (isAllDay ? start.AddDays(1) : start.AddMinutes(30));
         return (isAllDay, start, end);
     }
 }

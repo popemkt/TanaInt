@@ -55,22 +55,13 @@ public class GCalService : IGCalService
         {
             Summary = dto.Name,
             Description = dto.Url,
-            Start = new()
-            {
-                DateTimeRaw = dto.IsAllDay
-                    ? dto.Start.ToString("yyyy-MM-dd")
-                    : dto.Start.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00",
-            },
-            End = new()
-            {
-                DateTimeRaw = dto.IsAllDay
-                    ? dto.End.ToString("yyyy-MM-dd")
-                    : dto.End.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00",
-            },
-            Source = new Event.SourceData()
-            {
-                Url = dto.Url
-            },
+            Start = dto.IsAllDay
+                ? new() { Date = dto.Start.ToString("yyyy-MM-dd") }
+                : new() { DateTimeRaw = dto.Start.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00", },
+            End = dto.IsAllDay
+                ? new() { Date = dto.End.ToString("yyyy-MM-dd") }
+                : new() { DateTimeRaw = dto.End.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00", },
+            Source = new() { Url = dto.Url },
         };
 
         CalendarBaseServiceRequest<Event> request;
@@ -80,7 +71,7 @@ public class GCalService : IGCalService
             request = service.Events.Update(eventBody, CalendarId, dto.Id);
 
         var result = await request.ExecuteAsync();
-        return $"{result.HtmlLink}\n{result.Id}";
+        return TanaExtRefResponse.FormatOutput(result.HtmlLink, result.Id);
     }
 
     private void MoveToWritablePath()
