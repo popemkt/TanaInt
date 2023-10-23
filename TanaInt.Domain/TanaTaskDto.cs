@@ -12,11 +12,12 @@ public class TanaTaskDto
     public string Id { get; set; }
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
+    public bool IsAllDay { get; set; }
 
     public TanaTaskDto ParseInput()
     {
         var lines = Context.Split("\n");
-        (Start, End) = ParseDates(lines.Last(l => l.Contains("- Date::")));
+        (IsAllDay, Start, End) = ParseDates(lines.Last(l => l.Contains("- Date::")));
         Id = string.IsNullOrWhiteSpace(RefString) ? null : ParseRefString(RefString);
         return this;
     }
@@ -24,7 +25,7 @@ public class TanaTaskDto
 
     private string ParseRefString(string refString) => refString.Split(", ")[1];
 
-    private (DateTime Start, DateTime End) ParseDates(string line)
+    private (bool IsAllDay, DateTime Start, DateTime End) ParseDates(string line)
     {
         string pattern = @"\[\[(.*?)\]\]";
 
@@ -37,7 +38,7 @@ public class TanaTaskDto
         var isAllDay = (start - start.Date).Seconds == 0 && dates.Length == 1;
         var end = dates.Length > 1
             ? DateTime.Parse(dates[1], CultureInfo.InvariantCulture)
-            : (isAllDay ? start.AddDays(1) : start.AddMinutes(30));
-        return (start, end);
+            : (isAllDay ? start : start.AddMinutes(30));
+        return (isAllDay, start, end);
     }
 }
