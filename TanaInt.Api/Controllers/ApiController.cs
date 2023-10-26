@@ -18,7 +18,7 @@ public class ApiController : ControllerBase
     {
         try
         {
-            return Ok($"{await gCalService.SyncEvent(dto.ParseInput())}");
+            return Ok($"{await gCalService.SyncToEvent(dto.ParseInput())}");
         }
         catch
         {

@@ -17,11 +17,11 @@ var handler = async (APIGatewayHttpApiV2ProxyRequest input, ILambdaContext conte
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         });
 
-        var result = await new GCalService().SyncEvent(dto.ParseInput());
+        var result = await new GCalService().SyncToEvent(dto.ParseInput());
         return new APIGatewayHttpApiV2ProxyResponse()
         {
             StatusCode = (int)HttpStatusCode.OK,
-            Body = result
+            Body = result.FormatOutput()
         };
     }
     catch (Exception e)

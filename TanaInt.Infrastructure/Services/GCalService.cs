@@ -9,7 +9,7 @@ namespace TanaInt.Infrastructure.Services;
 
 public interface IGCalService
 {
-    Task<string> SyncEvent(TanaTaskDto dto);
+    Task<TanaExtRefResponse> SyncToEvent(TanaTaskDto dto);
 }
 
 public class GCalService : IGCalService
@@ -25,7 +25,7 @@ public class GCalService : IGCalService
     private const string CalendarId =
         "f89c72dc48bd042b626e8abb6f4c7722b58f3d83d377330ec583dc584e32b88b@group.calendar.google.com";
 
-    public async Task<string> SyncEvent(TanaTaskDto dto)
+    public async Task<TanaExtRefResponse> SyncToEvent(TanaTaskDto dto)
     {
         UserCredential credential;
         // Load client secrets.
@@ -53,7 +53,7 @@ public class GCalService : IGCalService
 
         var eventBody = new Event()
         {
-            Summary = dto.Name,
+            Summary = dto.FormatName(),
             Description = dto.Url,
             Start = dto.IsAllDay
                 ? new() { Date = dto.Start.ToString("yyyy-MM-dd") }
@@ -63,6 +63,7 @@ public class GCalService : IGCalService
                 : new() { DateTimeRaw = dto.End.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00", },
             Source = new() { Url = dto.Url },
         };
+        
 
         CalendarBaseServiceRequest<Event> request;
         if (string.IsNullOrWhiteSpace(dto.Id))
@@ -71,7 +72,7 @@ public class GCalService : IGCalService
             request = service.Events.Update(eventBody, CalendarId, dto.Id);
 
         var result = await request.ExecuteAsync();
-        return TanaExtRefResponse.FormatOutput(result.HtmlLink, result.Id);
+        return new TanaExtRefResponse(result.HtmlLink, result.Id);
     }
 
     private void MoveToWritablePath()

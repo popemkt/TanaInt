@@ -13,7 +13,13 @@ public class TanaTaskDto
     public DateTime Start { get; set; }
     public DateTime End { get; set; }
     public bool IsAllDay { get; set; }
+    public string DoneTime { get; set; }
 
+    public string FormatName()
+    {
+        return string.IsNullOrWhiteSpace(DoneTime) ? $"⚪ {Name}" : $"✅ {Name}";
+    }
+    
     public TanaTaskDto ParseInput()
     {
         var lines = Context.Split("\n");
@@ -21,7 +27,6 @@ public class TanaTaskDto
         Id = string.IsNullOrWhiteSpace(RefString) ? null : ParseRefString(RefString);
         return this;
     }
-
 
     private string ParseRefString(string refString) => refString.Split(", ")[1];
 
