@@ -1,0 +1,50 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET SAM app
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Fill secrets file
+      run: |
+        'echo "$TANAINT_APP_CREDENTIALS" > Files/credentials.json'
+        'echo "$MY_USER_TOKEN" > Files/token/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user'
+      env:
+        TANAINT_APP_CREDENTIALS: ${{ secrets.TANAINT_APP_CREDENTIALS }}
+        MY_USER_TOKEN: ${{ secrets.MY_USER_TOKEN }}
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+    - name: authenticate and assume aws role
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::055172479029:role/TanaInt-GithubActions
+        aws-regions: ${{ vars.AWS_REGION }}
+        
+    - name: Lambda tools install
+      run: dotnet tool install -g Amazon.Lambda.Tools
+    - name: Deploy Lambda
+      run: dotnet lambda deploy-serverless --region $AWS_REGION
+      env:
+        AWS_REGION: ${{ vars.AWS_REGION }}
