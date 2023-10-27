@@ -11,11 +11,12 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write
+      contents: read
+      
     steps:
-    
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -24,8 +25,10 @@ jobs:
 
     - name: Fill secrets file
       run: |
-        ls
-        ls ./Files
+    - name: Fill secrets file
+      run: |
+        echo "$TANAINT_APP_CREDENTIALS" >> Files/credentials.json
+        echo "$MY_USER_TOKEN" >> Files/token/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user
       env:
         TANAINT_APP_CREDENTIALS: ${{ secrets.TANAINT_APP_CREDENTIALS }}
         MY_USER_TOKEN: ${{ secrets.MY_USER_TOKEN }}
