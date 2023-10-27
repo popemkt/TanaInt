@@ -24,6 +24,7 @@ jobs:
 
     - name: Fill secrets file
       run: |
+        'ls Files'
         'touch ./Files/credentials.json'
         'touch ./Files/token/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user'
         'echo "$TANAINT_APP_CREDENTIALS" >> ./Files/credentials.json'
