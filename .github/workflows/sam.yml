@@ -48,5 +48,6 @@ jobs:
       run: dotnet tool install -g Amazon.Lambda.Tools
     - name: Deploy Lambda
       run: dotnet lambda deploy-serverless --region $AWS_REGION
+      working-directory: ./TanaInt.Sam
       env:
         AWS_REGION: ${{ vars.AWS_REGION }}
