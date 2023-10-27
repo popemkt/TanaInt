@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{26D99F13
 	ProjectSection(SolutionItems) = preProject
 		Files\tana-template.json = Files\tana-template.json
 		README.md = README.md
+		Files\credentials.json = Files\credentials.json
+		Files\token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user = Files\token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TanaInt.Sam", "TanaInt.Sam\TanaInt.Sam.csproj", "{5C7894B1-E5EA-4FBD-8326-AF4C34A0832C}"

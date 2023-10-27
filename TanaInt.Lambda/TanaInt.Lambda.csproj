@@ -17,16 +17,18 @@
         <PackageReference Include="Amazon.Lambda.Core" Version="2.1.0"/>
         <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.3.1"/>
     </ItemGroup>
+    
     <ItemGroup>
-        <Content Include="..\TanaInt.Api\credentials.json">
+        <Content Include="..\Files\credentials.json">
             <Link>credentials.json</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="..\TanaInt.Api\token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user">
+        <Content Include="..\Files\token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user">
             <Link>token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
+
     <ItemGroup>
       <None Update="aws-lambda-tools-defaults.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>

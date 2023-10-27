@@ -13,27 +13,31 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
+
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Views\" />
+        <Folder Include="Views\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="credentials.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+        <Content Include="..\Files\credentials.json">
+            <Link>credentials.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+
+        </Content>
+        <Content Include="..\Files\token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user">
+            <Link>token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TanaInt.Domain\TanaInt.Domain.csproj" />
-      <ProjectReference Include="..\TanaInt.Infrastructure\TanaInt.Infrastructure.csproj" />
+        <ProjectReference Include="..\TanaInt.Domain\TanaInt.Domain.csproj"/>
+        <ProjectReference Include="..\TanaInt.Infrastructure\TanaInt.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

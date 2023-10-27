@@ -28,14 +28,16 @@
     <ItemGroup>
         <ProjectReference Include="..\TanaInt.Infrastructure\TanaInt.Infrastructure.csproj"/>
     </ItemGroup>
+
     <ItemGroup>
-        <Content Include="..\TanaInt.Api\credentials.json">
+        <Content Include="..\Files\credentials.json">
             <Link>credentials.json</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="..\TanaInt.Api\token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user">
+        <Content Include="..\Files\token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user">
             <Link>token\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
+
 </Project>
