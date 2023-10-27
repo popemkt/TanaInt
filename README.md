@@ -62,7 +62,7 @@ aws configure
 Deploy the SAM app:
 ```shell
 cd TanaInt.Sam
-dotnet lambda deploy-serverless
+dotnet lambda deploy-serverless --region AWS_REGION
 ```
 
 This will package and deploy the function to AWS Lambda using the configuration in aws-lambda-tools-defaults.json (currently it will fail at deploy if unauthenticated, only the zip is created, which is enough).
