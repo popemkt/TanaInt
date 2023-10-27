@@ -6,12 +6,19 @@ TanaInt is a project to integrate my personal Tana workflow with Google Calendar
 
 The project contains the following key components:
 
-### TanaInt.Lambda
+### TanaInt.Sam
+
+An AWS serverless app (SAM) that contains the core integration logic.
+
+Handles incoming events, calls `GCalService` to sync calendar, and returns response.
+
+Also handles syncing events from GCal to Tana using Tana Input API.
+
+### TanaInt.Lambda (Deprecated)
 
 An AWS Lambda function that contains the core integration logic. Handles incoming events, calls GCalService to sync calendar, and returns response.
 
 The Lambda function is deployed as an executable assembly rather than a class library. The `LambdaBootstrapBuilder` starts the Lambda runtime.
-
 
 ### TanaInt.Api
 
@@ -45,10 +52,17 @@ Install the Amazon.Lambda.Tools:
 ```shell
 dotnet tool install -g Amazon.Lambda.Tools
 ```
-Deploy the function:
+
+Login to aws cli 
+
+```shell
+aws configure
+```
+
+Deploy the SAM app:
 ```shell
 cd TanaInt.Lambda
-dotnet lambda deploy-function
+dotnet lambda deploy-serverless -sn "TanaInt" -sb
 ```
 
 This will package and deploy the function to AWS Lambda using the configuration in aws-lambda-tools-defaults.json (currently it will fail at deploy if unauthenticated, only the zip is created, which is enough).

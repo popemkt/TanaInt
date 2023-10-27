@@ -1,18 +1,28 @@
 ﻿using System.Globalization;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace TanaInt.Domain;
 
 public class TanaTaskDto
 {
+    [JsonPropertyName("name")]
     public string Name { get; set; }
+    [JsonPropertyName("url")]
     public string Url { get; set; }
+    [JsonPropertyName("context")]
     public string Context { get; set; }
+    [JsonPropertyName("refString")]
     public string RefString { get; set; }
+    [JsonPropertyName("id")]
     public string Id { get; set; }
+    [JsonIgnore]
     public DateTime Start { get; set; }
+    [JsonIgnore]
     public DateTime End { get; set; }
+    [JsonIgnore]
     public bool IsAllDay { get; set; }
+    [JsonPropertyName("doneTime")]
     public string DoneTime { get; set; }
 
     public string FormatName()

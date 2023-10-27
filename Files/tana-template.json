@@ -1,5 +1,5 @@
 {
-  "name": "${name}",
+  "name": "${Work.name}",
   "date": "${Date}",
   "id": "${sys:nodeId}",
   "url": "${sys:nodeURL}",
