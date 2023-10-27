@@ -43,7 +43,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: arn:aws:iam::055172479029:role/TanaInt-GithubActions
-        aws-regions: ${{ vars.AWS_REGION }}
+        aws-region: ${{ vars.AWS_REGION }}
         
     - name: Lambda tools install
       run: dotnet tool install -g Amazon.Lambda.Tools
