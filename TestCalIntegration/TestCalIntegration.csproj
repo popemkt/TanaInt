@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="..\TanaInt.Api\credentials.json">
+        <Content Include="..\Files\credentials.json">
             <Link>credentials.json</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>

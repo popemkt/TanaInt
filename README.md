@@ -84,4 +84,4 @@ The `tana-template.json` file is for the template of the request from Tana.
 
 ## External Resourecs
 - Lambda is hosted with root IAM user: `popemkt1@gmail.com`.
-- Function url, [credentials.json](TanaInt.Api/credentials.json), [My google user token](TanaInt.Api/token/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user) are stored in [Prd Env](https://github.com/popemkt/TanaInt/settings/environments/1470884971/edit) secrets.
+- Function url, [credentials.json](Files/credentials.json), [My google user token](Files/token/Google.Apis.Auth.OAuth2.Responses.TokenResponse-user) are stored in [Prd Env](https://github.com/popemkt/TanaInt/settings/environments/1470884971/edit) secrets.
