@@ -3,6 +3,15 @@
   "Transform": "AWS::Serverless-2016-10-31",
   "Description": "An AWS Serverless Application. This template is partially managed by Amazon.Lambda.Annotations (v1.0.0.0).",
   "Resources": {
+    "TanaInt": {
+      "Type": "AWS::Serverless::Api",
+      "Properties": {
+        "StageName": "Prod",
+        "Auth": {
+          "ApiKeyRequired": true
+        }
+      }
+    },
     "TanaIntSamFunctionsGetEventsFromGcalGenerated": {
       "Type": "AWS::Serverless::Function",
       "Metadata": {
@@ -31,6 +40,9 @@
           "RootGet": {
             "Type": "Api",
             "Properties": {
+              "RestApiId": {
+                "Ref": "TanaInt"
+              },
               "Path": "/gcal-to-tana",
               "Method": "GET"
             }
@@ -60,6 +72,9 @@
           "RootPost": {
             "Type": "Api",
             "Properties": {
+              "RestApiId": {
+                "Ref": "TanaInt"
+              },
               "Path": "/tana-to-gcal",
               "Method": "POST"
             }
@@ -72,7 +87,7 @@
     "ApiURL": {
       "Description": "API endpoint URL for Prod environment",
       "Value": {
-        "Fn::Sub": "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/"
+        "Fn::Sub": "https://${TanaInt}.execute-api.${AWS::Region}.amazonaws.com/"
       }
     }
   }
