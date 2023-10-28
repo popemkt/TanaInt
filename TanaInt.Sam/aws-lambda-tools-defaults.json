@@ -9,7 +9,7 @@
   "configuration": "Release",
   "s3-prefix": "TanaInt.Sam/",
   "template": "serverless.template",
-  "s3-bucket": "tanaint-builds",
+  "s3-bucket": "tanaint-artifacts",
   "stack-name": "TanaInt",
   "template-parameters": "",
   "docker-host-build-output-dir": "./bin/Release/lambda-publish"
