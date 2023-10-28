@@ -2,6 +2,14 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Transform": "AWS::Serverless-2016-10-31",
   "Description": "An AWS Serverless Application. This template is partially managed by Amazon.Lambda.Annotations (v1.0.0.0).",
+  "Globals": {
+    "Api": {
+      "TracingEnabled": true
+    },
+    "Function": {
+      "Tracing": "Active"
+    }
+  },
   "Resources": {
     "TanaInt": {
       "Type": "AWS::Serverless::Api",
