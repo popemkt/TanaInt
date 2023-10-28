@@ -22,6 +22,12 @@
         "PackageType": "Zip",
         "Handler": "TanaInt.Sam::TanaInt.Sam.Functions_GetEventsFromGcal_Generated::GetEventsFromGcal",
         "Events": {
+          "Scheduled": {
+            "Type": "Schedule",
+            "Properties": {
+              "Schedule": "cron(0 0 * * ? *)"
+            }
+          },
           "RootGet": {
             "Type": "HttpApi",
             "Properties": {
