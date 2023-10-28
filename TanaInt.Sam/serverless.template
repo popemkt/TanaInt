@@ -29,7 +29,7 @@
             }
           },
           "RootGet": {
-            "Type": "HttpApi",
+            "Type": "Api",
             "Properties": {
               "Path": "/gcal-to-tana",
               "Method": "GET"
@@ -58,7 +58,7 @@
         "Handler": "TanaInt.Sam::TanaInt.Sam.Functions_PushEventsToGcal_Generated::PushEventsToGcal",
         "Events": {
           "RootPost": {
-            "Type": "HttpApi",
+            "Type": "Api",
             "Properties": {
               "Path": "/tana-to-gcal",
               "Method": "POST"
@@ -72,7 +72,7 @@
     "ApiURL": {
       "Description": "API endpoint URL for Prod environment",
       "Value": {
-        "Fn::Sub": "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/"
+        "Fn::Sub": "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/"
       }
     }
   }

@@ -34,7 +34,7 @@ public class Functions
     }
 
     [LambdaFunction(MemorySize = 216, Timeout = 60)]
-    [HttpApi(LambdaHttpMethod.Get, "/gcal-to-tana")]
+    [RestApi(LambdaHttpMethod.Get, "/gcal-to-tana")]
     public Task GetEventsFromGcal(ILambdaContext context, [FromQuery] DateTime? date)
     {
         context.Logger.LogInformation(date.ToString());
@@ -42,7 +42,7 @@ public class Functions
     }
 
     [LambdaFunction(MemorySize = 216, Timeout = 60)]
-    [HttpApi(LambdaHttpMethod.Post, "/tana-to-gcal")]
+    [RestApi(LambdaHttpMethod.Post, "/tana-to-gcal")]
     public async Task<APIGatewayHttpApiV2ProxyResponse> PushEventsToGcal([FromBody] TanaTaskDto tanaTaskDto,
         ILambdaContext context)
     {
