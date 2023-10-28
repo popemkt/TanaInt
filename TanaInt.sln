@@ -20,8 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{26D99F13
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TanaInt.Sam", "TanaInt.Sam\TanaInt.Sam.csproj", "{5C7894B1-E5EA-4FBD-8326-AF4C34A0832C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LambdaASP.NETCoreWebAPI1", "LambdaASP.NETCoreWebAPI1\src\LambdaASP.NETCoreWebAPI1\LambdaASP.NETCoreWebAPI1.csproj", "{DF9F4509-3963-4388-B3FD-55B4DE5170ED}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,9 +50,5 @@ Global
 		{5C7894B1-E5EA-4FBD-8326-AF4C34A0832C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C7894B1-E5EA-4FBD-8326-AF4C34A0832C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C7894B1-E5EA-4FBD-8326-AF4C34A0832C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF9F4509-3963-4388-B3FD-55B4DE5170ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF9F4509-3963-4388-B3FD-55B4DE5170ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF9F4509-3963-4388-B3FD-55B4DE5170ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF9F4509-3963-4388-B3FD-55B4DE5170ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
