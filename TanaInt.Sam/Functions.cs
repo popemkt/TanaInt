@@ -43,14 +43,14 @@ public class Functions
 
     [LambdaFunction(MemorySize = 216, Timeout = 60)]
     [RestApi(LambdaHttpMethod.Post, "/tana-to-gcal")]
-    public async Task<APIGatewayHttpApiV2ProxyResponse> PushEventsToGcal([FromBody] TanaTaskDto tanaTaskDto,
+    public async Task<APIGatewayProxyResponse> PushEventsToGcal([FromBody] TanaTaskDto tanaTaskDto,
         ILambdaContext context)
     {
         context.Logger.LogError(JsonSerializer.Serialize(tanaTaskDto));
         try
         {
             var result = await _gCalService.SyncToEvent(tanaTaskDto.ParseInput());
-            return new APIGatewayHttpApiV2ProxyResponse()
+            return new APIGatewayProxyResponse()
             {
                 StatusCode = (int)HttpStatusCode.OK,
                 Body = result.FormatOutput()
@@ -59,7 +59,7 @@ public class Functions
         catch (Exception e)
         {
             context.Logger.LogError($"{tanaTaskDto}\n{e.Message}\n{e.StackTrace}");
-            return new APIGatewayHttpApiV2ProxyResponse()
+            return new APIGatewayProxyResponse()
             {
                 StatusCode = (int)HttpStatusCode.InternalServerError
             };
