@@ -5,6 +5,7 @@ using Amazon.Lambda.Annotations;
 using Amazon.Lambda.Annotations.APIGateway;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Serialization.SystemTextJson;
+using AWS.Lambda.Powertools.Tracing;
 using TanaInt.Domain;
 using TanaInt.Infrastructure.Services;
 
@@ -35,6 +36,7 @@ public class Functions
 
     [LambdaFunction(MemorySize = 216, Timeout = 60)]
     [RestApi(LambdaHttpMethod.Get, "/gcal-to-tana")]
+    [Tracing]
     public Task GetEventsFromGcal(ILambdaContext context, [FromQuery] DateTime? date)
     {
         context.Logger.LogInformation(date.ToString());
@@ -43,6 +45,7 @@ public class Functions
 
     [LambdaFunction(MemorySize = 216, Timeout = 60)]
     [RestApi(LambdaHttpMethod.Post, "/tana-to-gcal")]
+    [Tracing]
     public async Task<APIGatewayProxyResponse> PushEventsToGcal([FromBody] TanaTaskDto tanaTaskDto,
         ILambdaContext context)
     {
