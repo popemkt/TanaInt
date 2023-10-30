@@ -39,7 +39,7 @@ public class Functions
     [Tracing]
     public Task GetEventsFromGcal(ILambdaContext context, [FromQuery] DateTime? date)
     {
-        context.Logger.LogInformation(date.ToString());
+        context.Logger.LogInformation(date?.ToString());
         return Task.CompletedTask;
     }
 
@@ -49,7 +49,6 @@ public class Functions
     public async Task<APIGatewayProxyResponse> PushEventsToGcal([FromBody] TanaTaskDto tanaTaskDto,
         ILambdaContext context)
     {
-        context.Logger.LogError(JsonSerializer.Serialize(tanaTaskDto));
         try
         {
             var result = await _gCalService.SyncToEvent(tanaTaskDto.ParseInput());
