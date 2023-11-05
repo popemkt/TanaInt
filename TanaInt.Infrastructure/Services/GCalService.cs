@@ -66,10 +66,10 @@ public class GCalService : IGCalService
         
 
         CalendarBaseServiceRequest<Event> request;
-        if (string.IsNullOrWhiteSpace(dto.Id))
+        if (string.IsNullOrWhiteSpace(dto.GCalEventId))
             request = service.Events.Insert(eventBody, CalendarId);
         else
-            request = service.Events.Update(eventBody, CalendarId, dto.Id);
+            request = service.Events.Update(eventBody, CalendarId, dto.GCalEventId);
 
         var result = await request.ExecuteAsync();
         return new TanaExtRefResponse(result.HtmlLink, result.Id);

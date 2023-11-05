@@ -15,7 +15,7 @@ public class TanaTaskDto
     [JsonPropertyName("refString")]
     public string RefString { get; set; }
     [JsonPropertyName("id")]
-    public string Id { get; set; }
+    public string? GCalEventId { get; set; }
     [JsonIgnore]
     public DateTime Start { get; set; }
     [JsonIgnore]
@@ -34,8 +34,19 @@ public class TanaTaskDto
     {
         var lines = Context.Split("\n");
         (IsAllDay, Start, End) = ParseDates(lines.Last(l => l.StartsWith("  - Date::")));
-        Id = string.IsNullOrWhiteSpace(RefString) ? null : ParseRefString(RefString);
+        GCalEventId = string.IsNullOrWhiteSpace(RefString) ? null : ParseRefString(RefString);
+        DoneTime = ParseDoneTime(lines.FirstOrDefault()?.Substring(0, 5));
         return this;
+    }
+
+    private string ParseDoneTime(string? status)
+    {
+        if (string.IsNullOrWhiteSpace(status)) return string.Empty;
+
+        if (status.Contains("x", StringComparison.InvariantCultureIgnoreCase))
+            return status;
+
+        return string.Empty;
     }
 
     private string ParseRefString(string refString) => refString.Split(", ")[1];
