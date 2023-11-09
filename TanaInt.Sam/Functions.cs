@@ -7,6 +7,7 @@ using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Serialization.SystemTextJson;
 using AWS.Lambda.Powertools.Tracing;
 using TanaInt.Domain;
+using TanaInt.Domain.Calendar;
 using TanaInt.Infrastructure.Services;
 
 [assembly: LambdaSerializer(typeof(CamelCaseLambdaJsonSerializer))]

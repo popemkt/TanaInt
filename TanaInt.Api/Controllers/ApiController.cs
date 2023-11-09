@@ -1,9 +1,6 @@
 using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
-using TanaInt.Domain;
+using TanaInt.Domain.Calendar;
 using TanaInt.Infrastructure.Services;
 
 namespace TanaInt.Api.Controllers;

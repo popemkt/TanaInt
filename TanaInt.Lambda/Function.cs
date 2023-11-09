@@ -5,6 +5,7 @@ using Amazon.Lambda.Core;
 using Amazon.Lambda.RuntimeSupport;
 using Amazon.Lambda.Serialization.SystemTextJson;
 using TanaInt.Domain;
+using TanaInt.Domain.Calendar;
 using TanaInt.Infrastructure.Services;
 
 // The function handler that will be called for each Lambda event

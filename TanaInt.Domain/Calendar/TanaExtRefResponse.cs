@@ -1,4 +1,4 @@
-namespace TanaInt.Domain;
+namespace TanaInt.Domain.Calendar;
 
 public class TanaExtRefResponse
 {
