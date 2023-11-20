@@ -7,8 +7,7 @@
       "TracingEnabled": true
     },
     "Function": {
-      "Tracing": "Active",
-      "LogRetentionInDays": 14
+      "Tracing": "Active"
     }
   },
   "Resources": {
