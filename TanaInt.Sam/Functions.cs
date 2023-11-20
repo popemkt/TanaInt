@@ -77,6 +77,7 @@ public class Functions
     {
         try
         {
+            context.Logger.LogInformation($"{bannerChangerDto}");
             var result = await bannerChangerService.ChangeBanner(bannerChangerDto);
             return new APIGatewayProxyResponse()
             {
