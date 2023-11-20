@@ -7,7 +7,8 @@
       "TracingEnabled": true
     },
     "Function": {
-      "Tracing": "Active"
+      "Tracing": "Active",
+      "LogRetentionInDays": 14
     }
   },
   "Resources": {
@@ -112,6 +113,9 @@
           "RootPost": {
             "Type": "Api",
             "Properties": {
+              "RestApiId": {
+                "Ref": "TanaInt"
+              },
               "Path": "/change-banner",
               "Method": "POST"
             }
