@@ -6,30 +6,21 @@ namespace TanaInt.Domain.Calendar;
 
 public class TanaTaskDto
 {
-    [JsonPropertyName("name")]
-    public string Name { get; set; }
-    [JsonPropertyName("url")]
-    public string Url { get; set; }
-    [JsonPropertyName("context")]
-    public string Context { get; set; }
-    [JsonPropertyName("refString")]
-    public string RefString { get; set; }
-    [JsonPropertyName("id")]
-    public string? GCalEventId { get; set; }
-    [JsonIgnore]
-    public DateTime Start { get; set; }
-    [JsonIgnore]
-    public DateTime End { get; set; }
-    [JsonIgnore]
-    public bool IsAllDay { get; set; }
-    [JsonPropertyName("doneTime")]
-    public string DoneTime { get; set; }
+    [JsonPropertyName("name")] public string Name { get; set; }
+    [JsonPropertyName("url")] public string Url { get; set; }
+    [JsonPropertyName("context")] public string Context { get; set; }
+    [JsonPropertyName("refString")] public string RefString { get; set; }
+    [JsonPropertyName("id")] public string? GCalEventId { get; set; }
+    [JsonIgnore] public DateTime Start { get; set; }
+    [JsonIgnore] public DateTime End { get; set; }
+    [JsonIgnore] public bool IsAllDay { get; set; }
+    [JsonPropertyName("doneTime")] public string DoneTime { get; set; }
 
     public string FormatName()
     {
         return string.IsNullOrWhiteSpace(DoneTime) ? $"⚪ {Name}" : $"✅ {Name}";
     }
-    
+
     public TanaTaskDto ParseInput()
     {
         var lines = Context.Split("\n");
@@ -53,11 +44,10 @@ public class TanaTaskDto
 
     private (bool IsAllDay, DateTime Start, DateTime End) ParseDates(string line)
     {
-        string pattern = @"\[\[(.*?)\]\]";
+        const string pattern = @"\[\[(.*?)\]\]";
 
         // Create a Regex object and match the pattern
-        Regex regex = new Regex(pattern);
-        var match = regex.Match(line);
+        var match = Regex.Match(line, pattern, RegexOptions.Compiled);
 
         var dates = match.Groups[1].Value.Substring(match.Groups[1].Value.IndexOf(":") + 1).Split("/");
         var start = DateTime.Parse(dates[0], CultureInfo.InvariantCulture);

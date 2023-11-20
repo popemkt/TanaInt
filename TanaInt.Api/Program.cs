@@ -1,4 +1,4 @@
-using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
+using TanaInt.Domain.WallChanger;
 using TanaInt.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IGCalService, GCalService>();
+builder.Services.AddScoped<IBannerChangerService, BannerChangerService>();
 builder.Services.AddCors(o =>
 {
     o.AddPolicy("Tana", builder =>

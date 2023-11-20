@@ -1,13 +1,12 @@
 using System.Net;
-using System.Text.Json;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.Annotations;
 using Amazon.Lambda.Annotations.APIGateway;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Serialization.SystemTextJson;
 using AWS.Lambda.Powertools.Tracing;
-using TanaInt.Domain;
 using TanaInt.Domain.Calendar;
+using TanaInt.Domain.WallChanger;
 using TanaInt.Infrastructure.Services;
 
 [assembly: LambdaSerializer(typeof(CamelCaseLambdaJsonSerializer))]
@@ -44,6 +43,7 @@ public class Functions
         return Task.CompletedTask;
     }
 
+
     [LambdaFunction(MemorySize = 216, Timeout = 60)]
     [RestApi(LambdaHttpMethod.Post, "/tana-to-gcal")]
     [Tracing]
@@ -66,6 +66,28 @@ public class Functions
             {
                 StatusCode = (int)HttpStatusCode.InternalServerError
             };
+        }
+    }
+
+    [LambdaFunction(MemorySize = 216, Timeout = 60)]
+    [RestApi(LambdaHttpMethod.Post, "/change-banner")]
+    [Tracing]
+    public async Task<APIGatewayProxyResponse> ChangeBanner(ILambdaContext context, [FromBody] BannerChangerDto bannerChangerDto,
+        [FromServices] IBannerChangerService bannerChangerService)
+    {
+        try
+        {
+            var result = await bannerChangerService.ChangeBanner(bannerChangerDto);
+            return new APIGatewayProxyResponse()
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = result
+            };
+        }
+        catch (Exception e)
+        {
+            context.Logger.LogError($"{bannerChangerDto}\n{e.Message}\n{e.StackTrace}");
+            throw;
         }
     }
 }

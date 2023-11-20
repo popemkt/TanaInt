@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using TanaInt.Domain.WallChanger;
 using TanaInt.Infrastructure.Services;
 
 namespace TanaInt.Sam;
@@ -18,6 +19,7 @@ public class Startup
     {
         // Here we'll add an instance of our calculator service that will be used by each function
         services.AddSingleton<IGCalService, GCalService>();
+        services.AddSingleton<IBannerChangerService, BannerChangerService>();
         //// Example of creating the IConfiguration object and
         //// adding it to the dependency injection container.
         //var builder = new ConfigurationBuilder()
