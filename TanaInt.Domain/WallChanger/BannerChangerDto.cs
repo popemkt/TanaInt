@@ -5,6 +5,7 @@ namespace TanaInt.Domain.WallChanger;
 
 public class BannerChangerDto
 {
+    [JsonPropertyName("context")]
     public string Context { get; set; }
     [JsonIgnore] public List<string> ImagesList { get; set; } = new();
 
