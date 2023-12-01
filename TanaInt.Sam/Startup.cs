@@ -20,14 +20,13 @@ public class Startup
         // Here we'll add an instance of our calculator service that will be used by each function
         services.AddSingleton<IGCalService, GCalService>();
         services.AddSingleton<IBannerChangerService, BannerChangerService>();
+        services.AddSingleton<ICalendarHelperService, CalendarHelperService>();
         //// Example of creating the IConfiguration object and
         //// adding it to the dependency injection container.
         //var builder = new ConfigurationBuilder()
-        //                    .AddJsonFile("appsettings.json", true);
 
         //// Add AWS Systems Manager as a potential provider for the configuration. This is 
         //// available with the Amazon.Extensions.Configuration.SystemsManager NuGet package.
-        //builder.AddSystemsManager("/app/settings");
 
         //var configuration = builder.Build();
         //services.AddSingleton<IConfiguration>(configuration);

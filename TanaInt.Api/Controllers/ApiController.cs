@@ -37,4 +37,20 @@ public class ApiController : ControllerBase
             return StatusCode((int)HttpStatusCode.InternalServerError);
         }
     }
+
+    [HttpPost("next-rrule")]
+    public async Task<ActionResult<string>> NextRRuleOccurence([FromBody] TanaDateTimeDto dto,
+        [FromServices] ICalendarHelperService calendarHelper)
+    {
+        try
+        {
+            var parsedDto = dto.ParseInput();
+            return Ok(TanaDateTimeResponse.FormatDate(
+                calendarHelper.NextOccurrence(calendarHelper.ParseRRule(dto.RRule), parsedDto.OccurenceDate)));
+        }
+        catch
+        {
+            return StatusCode((int)HttpStatusCode.InternalServerError);
+        }
+    }
 }

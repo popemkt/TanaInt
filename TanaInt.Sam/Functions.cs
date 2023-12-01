@@ -72,7 +72,8 @@ public class Functions
     [LambdaFunction(MemorySize = 216, Timeout = 60)]
     [RestApi(LambdaHttpMethod.Post, "/change-banner")]
     [Tracing]
-    public async Task<APIGatewayProxyResponse> ChangeBanner(ILambdaContext context, [FromBody] BannerChangerDto bannerChangerDto,
+    public async Task<APIGatewayProxyResponse> ChangeBanner(ILambdaContext context,
+        [FromBody] BannerChangerDto bannerChangerDto,
         [FromServices] IBannerChangerService bannerChangerService)
     {
         try
@@ -87,6 +88,31 @@ public class Functions
         catch (Exception e)
         {
             context.Logger.LogError($"{bannerChangerDto}\n{e.Message}\n{e.StackTrace}");
+            throw;
+        }
+    }
+
+    [LambdaFunction(MemorySize = 216, Timeout = 60)]
+    [RestApi(LambdaHttpMethod.Post, "/next-rrule-occurrence")]
+    [Tracing]
+    public APIGatewayProxyResponse NextRRuleOccurrence(ILambdaContext context,
+        [FromBody] TanaDateTimeDto dto,
+        [FromServices] ICalendarHelperService calendarHelper)
+    {
+        try
+        {
+            var parsedDto = dto.ParseInput();
+            var result = TanaDateTimeResponse.FormatDate(
+                calendarHelper.NextOccurrence(calendarHelper.ParseRRule(dto.RRule), parsedDto.OccurenceDate));
+            return new APIGatewayProxyResponse()
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = result
+            };
+        }
+        catch (Exception e)
+        {
+            context.Logger.LogError($"{dto}\n{e.Message}\n{e.StackTrace}");
             throw;
         }
     }

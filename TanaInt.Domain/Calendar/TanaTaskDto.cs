@@ -44,16 +44,11 @@ public class TanaTaskDto
 
     private (bool IsAllDay, DateTime Start, DateTime End) ParseDates(string line)
     {
-        const string pattern = @"\[\[(.*?)\]\]";
-
-        // Create a Regex object and match the pattern
-        var match = Regex.Match(line, pattern, RegexOptions.Compiled);
-
-        var dates = match.Groups[1].Value.Substring(match.Groups[1].Value.IndexOf(":") + 1).Split("/");
-        var start = DateTime.Parse(dates[0], CultureInfo.InvariantCulture);
-        var isAllDay = (start - start.Date).TotalSeconds == 0 && dates.Length == 1;
-        var end = dates.Length > 1
-            ? DateTime.Parse(dates[1], CultureInfo.InvariantCulture)
+        var dateStrings = Utils.ExtractDateStrings(line);
+        var start = DateTime.Parse(dateStrings[0], CultureInfo.InvariantCulture);
+        var isAllDay = (start - start.Date).TotalSeconds == 0 && dateStrings.Length == 1;
+        var end = dateStrings.Length > 1
+            ? DateTime.Parse(dateStrings[1], CultureInfo.InvariantCulture)
             : (isAllDay ? start.AddDays(1) : start.AddMinutes(30));
         return (isAllDay, start, end);
     }
