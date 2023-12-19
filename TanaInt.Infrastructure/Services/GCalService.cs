@@ -64,15 +64,16 @@ public class GCalService : IGCalService
             Source = new() { Url = dto.Url },
         };
 
+        var reminders = eventBody.Reminders ?? new Event.RemindersData();
         if (!string.IsNullOrWhiteSpace(dto.DoneTime))
         {
-            eventBody.Reminders.UseDefault = false;
-            eventBody.Reminders.Overrides = new List<EventReminder>();
+            reminders.UseDefault = false;
+            reminders.Overrides = new List<EventReminder>();
         }
         else
         {
-            eventBody.Reminders.UseDefault = true;
-            eventBody.Reminders.Overrides = null;
+            reminders.UseDefault = true;
+            reminders.Overrides = null;
         }
 
         CalendarBaseServiceRequest<Event> request;
