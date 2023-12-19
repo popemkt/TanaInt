@@ -70,11 +70,6 @@ public class GCalService : IGCalService
             reminders.UseDefault = false;
             reminders.Overrides = new List<EventReminder>();
         }
-        else
-        {
-            reminders.UseDefault = true;
-            reminders.Overrides = null;
-        }
 
         CalendarBaseServiceRequest<Event> request;
         if (string.IsNullOrWhiteSpace(dto.GCalEventId))
