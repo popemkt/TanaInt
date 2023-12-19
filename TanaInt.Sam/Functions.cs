@@ -13,9 +13,6 @@ using TanaInt.Infrastructure.Services;
 
 namespace TanaInt.Sam;
 
-/// <summary>
-/// A collection of sample Lambda functions that provide a REST api for doing simple math calculations. 
-/// </summary>
 public class Functions
 {
     private readonly IGCalService _gCalService;

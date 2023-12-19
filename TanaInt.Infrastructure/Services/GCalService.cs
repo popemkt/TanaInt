@@ -63,7 +63,17 @@ public class GCalService : IGCalService
                 : new() { DateTimeRaw = dto.End.ToString("yyyy-MM-ddTHH:mm:ss") + "+07:00", },
             Source = new() { Url = dto.Url },
         };
-        
+
+        if (!string.IsNullOrWhiteSpace(dto.DoneTime))
+        {
+            eventBody.Reminders.UseDefault = false;
+            eventBody.Reminders.Overrides = new List<EventReminder>();
+        }
+        else
+        {
+            eventBody.Reminders.UseDefault = true;
+            eventBody.Reminders.Overrides = null;
+        }
 
         CalendarBaseServiceRequest<Event> request;
         if (string.IsNullOrWhiteSpace(dto.GCalEventId))
