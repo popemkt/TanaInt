@@ -65,7 +65,7 @@ public class GCalService : IGCalService
         };
 
         var reminders = eventBody.Reminders ?? new Event.RemindersData();
-        if (!string.IsNullOrWhiteSpace(dto.DoneTime))
+        if (!string.IsNullOrWhiteSpace(dto.DoneTime) || !string.IsNullOrWhiteSpace(dto.Scheduled))
         {
             reminders.UseDefault = false;
             reminders.Overrides = new List<EventReminder>();

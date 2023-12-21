@@ -15,10 +15,12 @@ public class TanaTaskDto
     [JsonIgnore] public DateTime End { get; set; }
     [JsonIgnore] public bool IsAllDay { get; set; }
     [JsonPropertyName("doneTime")] public string DoneTime { get; set; }
+    [JsonPropertyName("scheduled")] public string Scheduled { get; set; }
 
     public string FormatName()
     {
-        return string.IsNullOrWhiteSpace(DoneTime) ? $"⚪ {Name}" : $"✅ {Name}";
+        var undoneStatusIndicator = string.IsNullOrWhiteSpace(Scheduled)? "⚪" : "📅";
+        return string.IsNullOrWhiteSpace(DoneTime) ? $"{undoneStatusIndicator} {Name}" : $"✅ {Name}";
     }
 
     public TanaTaskDto ParseInput()
