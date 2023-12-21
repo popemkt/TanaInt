@@ -19,7 +19,8 @@ public class TanaTaskDto
 
     public string FormatName()
     {
-        var undoneStatusIndicator = string.IsNullOrWhiteSpace(Scheduled)? "⚪" : "📅";
+        var undoneStatusIndicator =
+            Scheduled?.Equals("yes", StringComparison.InvariantCultureIgnoreCase) is true ? "📅" : "⚪";
         return string.IsNullOrWhiteSpace(DoneTime) ? $"{undoneStatusIndicator} {Name}" : $"✅ {Name}";
     }
 
