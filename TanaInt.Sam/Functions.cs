@@ -77,15 +77,8 @@ public class Functions
         {
             string bodyText = request.Body;
             var bannerChangerDto = new BannerChangerDto(bodyText);
-
-            var split = bannerChangerDto.ImageText.Split('\n');
-            context.Logger.LogWarning(split.Length.ToString());
-            context.Logger.LogWarning(bannerChangerDto.ImageText.Split("\\n").Length.ToString());
-            var imagelist = split.Where(s => s.StartsWith("  -")).ToList(); //Indented 4 levels
-            context.Logger.LogWarning(imagelist.Count.ToString());
-            context.Logger.LogWarning(split.Count(s => s.StartsWith("  ")).ToString());
+            
             var result = await bannerChangerService.ChangeBanner(bannerChangerDto.ParseImages());
-            context.Logger.LogWarning(string.Join(',', bannerChangerDto.ImagesList));
             return new APIGatewayProxyResponse()
             {
                 StatusCode = (int)HttpStatusCode.OK,

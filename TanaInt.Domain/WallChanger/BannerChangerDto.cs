@@ -14,7 +14,7 @@ public class BannerChangerDto
 
     public BannerChangerDto ParseImages()
     {
-        var split = ImageText.Split('\n');
+        var split = ImageText.Split("\\n");
         ImagesList = split.Where(s => s.StartsWith("  -")).ToList(); //Indented 4 levels
         //random an item from imageslist
         return this;
