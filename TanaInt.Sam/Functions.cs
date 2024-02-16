@@ -70,11 +70,14 @@ public class Functions
     [RestApi(LambdaHttpMethod.Post, "/change-banner")]
     [Tracing]
     public async Task<APIGatewayProxyResponse> ChangeBanner(ILambdaContext context,
-        [FromBody] BannerChangerDto bannerChangerDto,
+        APIGatewayProxyRequest request,
         [FromServices] IBannerChangerService bannerChangerService)
     {
         try
         {
+            string bodyText = request.Body;
+            context.Logger.LogError(bodyText);
+            var bannerChangerDto = new BannerChangerDto(bodyText);
             var result = await bannerChangerService.ChangeBanner(bannerChangerDto.ParseImages());
             return new APIGatewayProxyResponse()
             {
@@ -84,7 +87,7 @@ public class Functions
         }
         catch (Exception e)
         {
-            context.Logger.LogError($"{bannerChangerDto}\n{e.Message}\n{e.StackTrace}");
+            context.Logger.LogError($"{request.Body}\n{e.Message}\n{e.StackTrace}");
             throw;
         }
     }

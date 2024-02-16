@@ -5,14 +5,17 @@ namespace TanaInt.Domain.WallChanger;
 
 public class BannerChangerDto
 {
-    [JsonPropertyName("context")]
-    public string Context { get; set; }
+    public BannerChangerDto(string imagesString)
+    {
+        ImageText = imagesString;
+    }
+    public string ImageText { get; set; }
     [JsonIgnore] public List<string> ImagesList { get; set; } = new();
 
     public BannerChangerDto ParseImages()
     {
-        var split = Context.Split('\n');
-        ImagesList = split.Where(s => s.StartsWith("      -")).ToList(); //Indented 4 levels
+        var split = ImageText.Split('\n');
+        ImagesList = split.Where(s => s.StartsWith("  -")).ToList(); //Indented 4 levels
         //random an item from imageslist
         return this;
     }
