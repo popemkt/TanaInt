@@ -76,9 +76,9 @@ public class Functions
         try
         {
             string bodyText = request.Body;
-            context.Logger.LogError(bodyText);
             var bannerChangerDto = new BannerChangerDto(bodyText);
             var result = await bannerChangerService.ChangeBanner(bannerChangerDto.ParseImages());
+            context.Logger.LogWarning(string.Join(',', bannerChangerDto.ImagesList));
             return new APIGatewayProxyResponse()
             {
                 StatusCode = (int)HttpStatusCode.OK,
