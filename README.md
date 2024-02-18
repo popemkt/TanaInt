@@ -1,6 +1,6 @@
 # TanaInt
 
-TanaInt is a project to integrate my personal Tana workflow with Google Calendar.
+TanaInt is a project to integrate my personal Tana workflow with other external services.
 
 ## Components
 
