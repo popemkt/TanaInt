@@ -20,6 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{26D99F13
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TanaInt.Sam", "TanaInt.Sam\TanaInt.Sam.csproj", "{5C7894B1-E5EA-4FBD-8326-AF4C34A0832C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Local", "Local", "{E7E159F1-0FA7-4B6E-9E25-F9D20FE7F9D9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deprecated", "Deprecated", "{A15470A5-ADC7-4D8A-9152-A3DA0795EB5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,5 +54,9 @@ Global
 		{5C7894B1-E5EA-4FBD-8326-AF4C34A0832C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C7894B1-E5EA-4FBD-8326-AF4C34A0832C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C7894B1-E5EA-4FBD-8326-AF4C34A0832C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8CB6ED5E-4220-4603-BAB8-E3B7B5127C5C} = {E7E159F1-0FA7-4B6E-9E25-F9D20FE7F9D9}
+		{B1F16AE5-EB37-4A9D-86F3-03A0DF6FE5F5} = {A15470A5-ADC7-4D8A-9152-A3DA0795EB5C}
 	EndGlobalSection
 EndGlobal
