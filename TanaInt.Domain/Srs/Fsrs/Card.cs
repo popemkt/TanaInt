@@ -41,7 +41,7 @@ public class Card
         LastReview = card.LastReview;
     }
 
-    public static Card FromTanaString(string tanaString, bool parseLastReview = false)
+    public static Card FromTanaString(string? tanaString, bool parseLastReview = false)
     {
         if (string.IsNullOrWhiteSpace(tanaString)) return new Card();
         var regex = new Regex(@"\[\[date:(.+?)\]\](.+)");
