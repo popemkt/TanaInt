@@ -29,7 +29,7 @@ public class FSRSTests
     [Fact]
     public void FSRS_P_W_ShouldMatchExpectedValues()
     {
-        var fsrs = new FSRS();
+        var fsrs = new Fsrs();
         var expectedW = new double[]
         {
             0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49, 0.14, 0.94, 2.18, 0.05,
@@ -41,7 +41,7 @@ public class FSRSTests
     [Fact]
     public void TestRepeat()
     {
-        var f = new FSRS();
+        var f = new Fsrs();
         var cardTest = new Card();
         f.P.W = new double[]
         {
@@ -49,7 +49,7 @@ public class FSRSTests
             0.9953, 2.7473, 0.0179, 0.3105, 0.3976, 0.0, 2.0902
         };
 
-        var now = new DateTime(2022, 11, 29, 12, 30, 0, 0);
+        var now = new DateTime(2022, 11, 29, 12, 30, 0, 0, DateTimeKind.Utc);
         var schedulingCards = f.Repeat(cardTest, now);
 
         var ratings = new Rating[]
@@ -74,6 +74,8 @@ public class FSRSTests
         for (int i = 0; i < ratings.Length; i++)
         {
             cardTest = schedulingCards[ratings[i]].Card;
+            //This lines for testing the conversion from TanaString to Card and back
+            cardTest = Card.FromTanaString(cardTest.ToTanaString(), true);
             ivlHistory[i] = cardTest.ScheduledDays;
             stateHistory[i] = schedulingCards[ratings[i]].ReviewLog.State;
             now = cardTest.Due;
@@ -108,11 +110,11 @@ public class FSRSTests
     [Fact]
     public void ReviewLog_ElapsedDays_ShouldBeZero_ForNewCards_WhenScheduledDaysIsSet()
     {
-        var fsrs = new FSRS();
+        var fsrs = new Fsrs();
         var card = new Card();
         card.ScheduledDays = 42;
 
-        var log = fsrs.Repeat(card, new DateTime(2023, 11, 10, 23, 20, 47, 297));
+        var log = fsrs.Repeat(card, new DateTime(2023, 11, 10, 23, 20, 47, 297, DateTimeKind.Utc));
         var againReviewLog = log[Rating.Again].ReviewLog;
 
         Assert.Equal(0, againReviewLog.ElapsedDays);
@@ -121,12 +123,12 @@ public class FSRSTests
     [Fact]
     public void ReviewLog_ScheduledDays_ShouldBeZero_ForAgainRatings_IrregardlessOfElapsedDaysSinceLastReview()
     {
-        var fsrs = new FSRS();
+        var fsrs = new Fsrs();
         var card = new Card();
         card.State = State.Learning;
-        card.LastReview = new DateTime(2023, 11, 6, 23, 20, 47, 297);
+        card.LastReview = new DateTime(2023, 11, 6, 23, 20, 47, 297, DateTimeKind.Utc);
 
-        var log = fsrs.Repeat(card, new DateTime(2023, 11, 10, 23, 20, 47, 297));
+        var log = fsrs.Repeat(card, new DateTime(2023, 11, 10, 23, 20, 47, 297, DateTimeKind.Utc));
         var againReviewLog = log[Rating.Again].ReviewLog;
 
         Assert.Equal(0, againReviewLog.ScheduledDays);

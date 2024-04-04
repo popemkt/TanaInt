@@ -153,6 +153,38 @@
           }
         }
       }
+    },
+    "TanaIntSamFunctionsFsrsGenerated": {
+      "Type": "AWS::Serverless::Function",
+      "Metadata": {
+        "Tool": "Amazon.Lambda.Annotations",
+        "SyncedEvents": [
+          "RootPost"
+        ]
+      },
+      "Properties": {
+        "Runtime": "dotnet6",
+        "CodeUri": ".",
+        "MemorySize": 216,
+        "Timeout": 60,
+        "Policies": [
+          "AWSLambdaBasicExecutionRole"
+        ],
+        "PackageType": "Zip",
+        "Handler": "TanaInt.Sam::TanaInt.Sam.Functions_Fsrs_Generated::Fsrs",
+        "Events": {
+          "RootPost": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": {
+                "Ref": "TanaInt"
+              },
+              "Path": "/fsrs",
+              "Method": "POST"
+            }
+          }
+        }
+      }
     }
   },
   "Outputs": {

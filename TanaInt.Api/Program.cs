@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IGCalService, GCalService>();
 builder.Services.AddScoped<IBannerChangerService, BannerChangerService>();
 builder.Services.AddScoped<ICalendarHelperService, CalendarHelperService>();
+builder.Services.AddScoped<IFsrsService, FsrsService>();
 builder.Services.AddCors(o =>
 {
     o.AddPolicy("Tana", builder =>

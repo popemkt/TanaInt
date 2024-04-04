@@ -1,6 +1,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using TanaInt.Domain.Calendar;
+using TanaInt.Domain.Srs.Fsrs;
 using TanaInt.Domain.WallChanger;
 using TanaInt.Infrastructure.Services;
 
@@ -51,6 +52,22 @@ public class ApiController : ControllerBase
         catch
         {
             return StatusCode((int)HttpStatusCode.InternalServerError);
+        }
+    }
+
+    [HttpPost("fsrs")]
+    public async Task<ActionResult<string>> GetFSRs([FromBody] FsrsDto dto,
+        [FromServices] IFsrsService fsrsService)
+    {
+        try
+        {
+            var parsedDto = dto.ParseInput();
+            return Ok(fsrsService.Repeat(parsedDto, DateTime.Now).ToTanaString());
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

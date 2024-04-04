@@ -6,6 +6,7 @@ using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Serialization.SystemTextJson;
 using AWS.Lambda.Powertools.Tracing;
 using TanaInt.Domain.Calendar;
+using TanaInt.Domain.Srs.Fsrs;
 using TanaInt.Domain.WallChanger;
 using TanaInt.Infrastructure.Services;
 
@@ -77,7 +78,7 @@ public class Functions
         {
             string bodyText = request.Body;
             var bannerChangerDto = new BannerChangerDto(bodyText);
-            
+
             var result = await bannerChangerService.ChangeBanner(bannerChangerDto.ParseImages());
             return new APIGatewayProxyResponse()
             {
@@ -108,6 +109,29 @@ public class Functions
             {
                 StatusCode = (int)HttpStatusCode.OK,
                 Body = result
+            };
+        }
+        catch (Exception e)
+        {
+            context.Logger.LogError($"{dto}\n{e.Message}\n{e.StackTrace}");
+            throw;
+        }
+    }
+
+    [LambdaFunction(MemorySize = 216, Timeout = 60)]
+    [RestApi(LambdaHttpMethod.Post, "/fsrs")]
+    [Tracing]
+    public APIGatewayProxyResponse Fsrs(ILambdaContext context,
+        [FromBody] FsrsDto dto,
+        [FromServices] IFsrsService fsrsService)
+    {
+        try
+        {
+            var parsedDto = dto.ParseInput();
+            return new APIGatewayProxyResponse()
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = fsrsService.Repeat(parsedDto, DateTime.Now).ToTanaString()
             };
         }
         catch (Exception e)

@@ -21,6 +21,7 @@ public class Startup
         services.AddSingleton<IGCalService, GCalService>();
         services.AddSingleton<IBannerChangerService, BannerChangerService>();
         services.AddSingleton<ICalendarHelperService, CalendarHelperService>();
+        services.AddSingleton<IFsrsService, FsrsService>();
         //// Example of creating the IConfiguration object and
         //// adding it to the dependency injection container.
         //var builder = new ConfigurationBuilder()

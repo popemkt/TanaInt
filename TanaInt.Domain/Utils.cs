@@ -4,7 +4,8 @@ namespace TanaInt.Domain;
 
 public static class Utils
 {
-    public static string FormatDate(DateTime date) => $"[[date:{date:yyyy-MM-dd}]]";
+    public static string FormatTanaDate(DateTime date) => $"[[date:{date:yyyy-MM-dd}]]";
+    public static string FormatTanaDateTime(DateTime date) => $"[[date:{date:yyyy-MM-ddThh:mm}]]";
 
     public static string[] ExtractDateStrings(string line)
     {
