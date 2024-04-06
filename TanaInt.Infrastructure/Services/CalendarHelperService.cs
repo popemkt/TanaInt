@@ -4,13 +4,13 @@ using TanaInt.Domain.Calendar;
 
 namespace TanaInt.Infrastructure.Services;
 
-public interface ICalendarHelperService
+public interface ICalendarRecurrenceService
 {
     RecurrencePattern ParseRRule(string rrule);
     DateTime NextOccurrence(RecurrencePattern rrule, DateTime? dt = null);
 }
 
-public class CalendarHelperService : ICalendarHelperService
+public class CalendarRecurrenceService : ICalendarRecurrenceService
 {
     private sealed class CustomPatternEvaluator : RecurrencePatternEvaluator
     {

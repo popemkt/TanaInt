@@ -137,11 +137,11 @@ public class Params
     }
 }
 
-public class Fsrs
+public class FsrsAlgorithm
 {
     public Params P { get; set; }
 
-    public Fsrs()
+    public FsrsAlgorithm()
     {
         P = new Params();
     }

@@ -1,4 +1,5 @@
 using TanaInt.Domain.WallChanger;
+using TanaInt.Infrastructure;
 using TanaInt.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +10,12 @@ builder.Services.AddControllersWithViews();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IGCalService, GCalService>();
-builder.Services.AddScoped<IBannerChangerService, BannerChangerService>();
-builder.Services.AddScoped<ICalendarHelperService, CalendarHelperService>();
-builder.Services.AddScoped<IFsrsService, FsrsService>();
+builder.Services
+    .AddGCalServices()
+    .AddBannerChangerService()
+    .AddCalendarRecurrenceServices()
+    .AddFsrsServices();
+
 builder.Services.AddCors(o =>
 {
     o.AddPolicy("Tana", builder =>

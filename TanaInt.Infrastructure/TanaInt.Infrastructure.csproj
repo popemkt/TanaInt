@@ -13,6 +13,7 @@
     <ItemGroup>
       <PackageReference Include="Google.Apis.Calendar.v3" Version="1.62.0.3171" />
       <PackageReference Include="Ical.Net" Version="4.2.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.2.24128.5" />
     </ItemGroup>
 
 </Project>

@@ -15,9 +15,9 @@ public class Card
     public State State { get; set; }
     public DateTime LastReview { get; set; }
 
-    public Card()
+    public Card(DateTime? now = null)
     {
-        Due = DateTime.Now;
+        Due = now ?? DateTime.Now;
         Stability = 0;
         Difficulty = 0;
         ElapsedDays = 0;
@@ -25,7 +25,7 @@ public class Card
         Reps = 0;
         Lapses = 0;
         State = State.New;
-        LastReview = DateTime.Now;
+        LastReview = now ?? DateTime.Now;
     }
 
     public Card(Card card)
@@ -60,7 +60,8 @@ public class Card
             card.Reps = int.Parse(srsValues[4]);
             card.Lapses = int.Parse(srsValues[5]);
             card.State = Enum.Parse<State>(srsValues[6]);
-            card.LastReview = parseLastReview ? DateTime.Parse(srsValues[7], CultureInfo.InvariantCulture) : DateTime.Now;
+            card.LastReview =
+                parseLastReview ? DateTime.Parse(srsValues[7], CultureInfo.InvariantCulture) : DateTime.Now;
 
             return card;
         }

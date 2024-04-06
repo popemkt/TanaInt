@@ -99,13 +99,13 @@ public class Functions
     [Tracing]
     public APIGatewayProxyResponse NextRRuleOccurrence(ILambdaContext context,
         [FromBody] TanaDateTimeDto dto,
-        [FromServices] ICalendarHelperService calendarHelper)
+        [FromServices] ICalendarRecurrenceService calendarRecurrence)
     {
         try
         {
             var parsedDto = dto.ParseInput();
             var result = TanaDateTimeResponse.FormatDate(
-                calendarHelper.NextOccurrence(calendarHelper.ParseRRule(dto.RRule), parsedDto.OccurenceDate));
+                calendarRecurrence.NextOccurrence(calendarRecurrence.ParseRRule(dto.RRule), parsedDto.OccurenceDate));
             return new APIGatewayProxyResponse()
             {
                 StatusCode = (int)HttpStatusCode.OK,
@@ -124,16 +124,18 @@ public class Functions
     [Tracing]
     public APIGatewayProxyResponse Fsrs(ILambdaContext context,
         [FromBody] FsrsDto dto,
-        [FromServices] IFsrsService fsrsService)
+        [FromServices] IFsrsService fsrsService,
+        [FromServices] IRequestTimeZoneProvider requestTimeZoneProvider)
     {
         try
         {
             var parsedDto = dto.ParseInput();
-            context.Logger.LogError(JsonSerializer.Serialize(parsedDto));
+            requestTimeZoneProvider.ParseAndSetRequestTimeZone(parsedDto.TimeZone);
             return new APIGatewayProxyResponse()
             {
                 StatusCode = (int)HttpStatusCode.OK,
-                Body = fsrsService.Repeat(parsedDto, DateTime.Now).ToTanaString()
+                Body = fsrsService.Repeat(parsedDto, requestTimeZoneProvider.Convert(DateTime.UtcNow))
+                    .ToTanaString()
             };
         }
         catch (Exception e)
