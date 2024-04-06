@@ -57,12 +57,18 @@ public class ApiController : ControllerBase
 
     [HttpPost("fsrs")]
     public async Task<ActionResult<string>> GetFSRs([FromBody] FsrsDto dto,
-        [FromServices] IFsrsService fsrsService)
+        [FromServices] IFsrsService fsrsService,
+        [FromServices] IRequestTimeZoneProvider requestTimeZoneProvider)
     {
         try
         {
             var parsedDto = dto.ParseInput();
-            return Ok(fsrsService.Repeat(parsedDto, DateTime.Now).ToTanaString());
+            requestTimeZoneProvider.ParseAndSetRequestTimeZone(parsedDto.TimeZone);
+            var now = DateTime.UtcNow;
+            var converted = requestTimeZoneProvider.Convert(now);
+            return Ok(fsrsService.Repeat(parsedDto, requestTimeZoneProvider.Convert(DateTime.UtcNow))
+                .ToTanaString()
+            );
         }
         catch (Exception e)
         {

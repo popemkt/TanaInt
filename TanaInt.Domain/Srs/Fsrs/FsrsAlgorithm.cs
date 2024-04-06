@@ -129,10 +129,10 @@ public class Params
     public int MaximumInterval { get; set; }
     public double[] W { get; set; }
 
-    public Params()
+    public Params(double requestRetention = 0.9, int maximumInterval = 120)
     {
-        RequestRetention = 0.9;
-        MaximumInterval = 36500;
+        RequestRetention = requestRetention;
+        MaximumInterval = maximumInterval;
         W = new double[] { 0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49, 0.14, 0.94, 2.18, 0.05, 0.34, 1.26, 0.29, 2.61 };
     }
 }
@@ -141,9 +141,9 @@ public class FsrsAlgorithm
 {
     public Params P { get; set; }
 
-    public FsrsAlgorithm()
+    public FsrsAlgorithm(Params p)
     {
-        P = new Params();
+        P = p;
     }
 
     public Dictionary<Rating, SchedulingInfo> Repeat(Card card, DateTime now)

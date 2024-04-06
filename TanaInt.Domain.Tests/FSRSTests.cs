@@ -29,7 +29,7 @@ public class FSRSTests
     [Fact]
     public void FSRS_P_W_ShouldMatchExpectedValues()
     {
-        var fsrs = new FsrsAlgorithm();
+        var fsrs = new FsrsAlgorithm(new Params());
         var expectedW = new double[]
         {
             0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49, 0.14, 0.94, 2.18, 0.05,
@@ -41,7 +41,7 @@ public class FSRSTests
     [Fact]
     public void TestRepeat()
     {
-        var f = new FsrsAlgorithm();
+        var f = new FsrsAlgorithm(new Params());
         var cardTest = new Card();
         f.P.W = new double[]
         {
@@ -110,7 +110,7 @@ public class FSRSTests
     [Fact]
     public void ReviewLog_ElapsedDays_ShouldBeZero_ForNewCards_WhenScheduledDaysIsSet()
     {
-        var fsrs = new FsrsAlgorithm();
+        var fsrs = new FsrsAlgorithm(new Params());
         var card = new Card();
         card.ScheduledDays = 42;
 
@@ -123,7 +123,7 @@ public class FSRSTests
     [Fact]
     public void ReviewLog_ScheduledDays_ShouldBeZero_ForAgainRatings_IrregardlessOfElapsedDaysSinceLastReview()
     {
-        var fsrs = new FsrsAlgorithm();
+        var fsrs = new FsrsAlgorithm(new Params());
         var card = new Card();
         card.State = State.Learning;
         card.LastReview = new DateTime(2023, 11, 6, 23, 20, 47, 297, DateTimeKind.Utc);
