@@ -65,7 +65,6 @@ public class ApiController : ControllerBase
             var parsedDto = dto.ParseInput();
             requestTimeZoneProvider.ParseAndSetRequestTimeZone(parsedDto.TimeZone);
             var now = DateTime.UtcNow;
-            var converted = requestTimeZoneProvider.Convert(now);
             return Ok(fsrsService.Repeat(parsedDto, requestTimeZoneProvider.Convert(DateTime.UtcNow))
                 .ToTanaString()
             );
