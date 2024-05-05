@@ -129,12 +129,16 @@ public class Functions
     {
         try
         {
+            context.Logger.LogInformation($"Dto: {JsonSerializer.Serialize(dto)}");
             var parsedDto = dto.ParseInput();
+            context.Logger.LogInformation($"Parsed dto: {JsonSerializer.Serialize(dto)}");
             requestTimeZoneProvider.ParseAndSetRequestTimeZone(parsedDto.TimeZone);
+            var convertedTime = requestTimeZoneProvider.Convert(DateTime.UtcNow);
+            context.Logger.LogInformation($"Converted time: {JsonSerializer.Serialize(convertedTime)}");
             return new APIGatewayProxyResponse()
             {
                 StatusCode = (int)HttpStatusCode.OK,
-                Body = fsrsService.Repeat(parsedDto, requestTimeZoneProvider.Convert(DateTime.UtcNow))
+                Body = fsrsService.Repeat(parsedDto, convertedTime)
                     .ToTanaString()
             };
         }
