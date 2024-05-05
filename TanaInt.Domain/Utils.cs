@@ -16,4 +16,6 @@ public static class Utils
 
         return match.Groups[1].Value[(match.Groups[1].Value.IndexOf(":") + 1)..].Split("/");
     }
+    
+    public static DateTime WithKind(this DateTime dateTime, DateTimeKind kind) => DateTime.SpecifyKind(dateTime, kind);
 }
