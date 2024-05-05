@@ -15,8 +15,13 @@ public class Card
     public State State { get; set; }
     public DateTime LastReview { get; set; }
 
+    //TODO there should be
+    //Card.CreateNew with required now
+    //Card contructor with required properties
+    //Card(card)
     public Card(DateTime? now = null)
     {
+        //TODO fix all the Now usages
         Due = now ?? DateTime.Now;
         Stability = 0;
         Difficulty = 0;
