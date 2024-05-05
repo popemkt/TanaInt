@@ -41,7 +41,7 @@ public class FSRSTests
     [Fact]
     public void TestRepeat()
     {
-        var f = new FsrsAlgorithm(new Params());
+        var f = new FsrsAlgorithm(new Params(maximumInterval: 36500));
         var cardTest = new Card();
         f.P.W = new double[]
         {

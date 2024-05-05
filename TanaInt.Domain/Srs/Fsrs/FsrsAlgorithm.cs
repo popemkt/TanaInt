@@ -129,7 +129,7 @@ public class Params
     public int MaximumInterval { get; set; }
     public double[] W { get; set; }
 
-    public Params(double requestRetention = 0.9, int maximumInterval = 120)
+    public Params(double requestRetention = 0.9, int maximumInterval = 240)
     {
         RequestRetention = requestRetention;
         MaximumInterval = maximumInterval;
