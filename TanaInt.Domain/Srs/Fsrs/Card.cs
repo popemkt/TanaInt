@@ -15,22 +15,39 @@ public class Card
     public State State { get; set; }
     public DateTime LastReview { get; set; }
 
-    //TODO there should be
-    //Card.CreateNew with required now
-    //Card contructor with required properties
-    //Card(card)
-    public Card(DateTime? now = null)
+    public Card(DateTime now)
     {
-        //TODO fix all the Now usages
-        Due = now ?? DateTime.Now;
-        Stability = 0;
-        Difficulty = 0;
+        Due = now;
+        Stability = 0d;
+        Difficulty = 0d;
         ElapsedDays = 0;
         ScheduledDays = 0;
         Reps = 0;
         Lapses = 0;
         State = State.New;
-        LastReview = now ?? DateTime.Now;
+        LastReview = now;
+    }
+    
+    public Card(
+        DateTime due, 
+        double stability, 
+        double difficulty, 
+        int elapsedDays, 
+        int scheduledDays, 
+        int reps, 
+        int lapses, 
+        State state, 
+        DateTime lastReview)
+    {
+        Due = due;
+        Stability = stability;
+        Difficulty = difficulty;
+        ElapsedDays = elapsedDays;
+        ScheduledDays = scheduledDays;
+        Reps = reps;
+        Lapses = lapses;
+        State = state;
+        LastReview = lastReview;
     }
 
     public Card(Card card)
@@ -46,34 +63,48 @@ public class Card
         LastReview = card.LastReview;
     }
 
-    public static Card FromTanaString(string? tanaString, bool parseLastReview = true)
+    public static Card FromTanaString(string? tanaString, bool parseLastReview = true, DateTime? now = null)
     {
-        if (string.IsNullOrWhiteSpace(tanaString)) return new Card();
-        var regex = new Regex(@"\[\[date:(.+?)\]\](.+)");
+        if (string.IsNullOrWhiteSpace(tanaString))
+        {
+            if (now is DateTime nowValue)
+                return new Card(nowValue);
+            
+            throw new ArgumentException($"{nameof(now)} is required if tanaString is null or whitespace");
+        }
+        var regex = new Regex(@"\[\[date:(.+?)\]\](.+)", RegexOptions.Compiled);
         var match = regex.Match(tanaString);
         if (match.Success)
         {
-            var card = new Card();
-            var due = DateTime.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture)
+            var cardDue = DateTime.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture)
                 // Kind needs to be unspecified since all date times belong to a timezone, this is to ease comparisons
                 .WithKind(DateTimeKind.Unspecified);
-            card.Due = due;
 
             var srsValues = match.Groups[2].Value.Split('/', StringSplitOptions.RemoveEmptyEntries);
-            card.Stability = double.Parse(srsValues[0]);
-            card.Difficulty = double.Parse(srsValues[1]);
-            card.ElapsedDays = int.Parse(srsValues[2]);
-            card.ScheduledDays = int.Parse(srsValues[3]);
-            card.Reps = int.Parse(srsValues[4]);
-            card.Lapses = int.Parse(srsValues[5]);
-            card.State = Enum.Parse<State>(srsValues[6]);
-            card.LastReview =
+            var cardStability = double.Parse(srsValues[0]);
+            var cardDifficulty = double.Parse(srsValues[1]);
+            var cardElapsedDays = int.Parse(srsValues[2]);
+            var cardScheduledDays = int.Parse(srsValues[3]);
+            var cardReps = int.Parse(srsValues[4]);
+            var cardLapses = int.Parse(srsValues[5]);
+            var cardState =  Enum.Parse<State>(srsValues[6]);
+            var cardLastReview = 
                 parseLastReview
                     ? DateTime.Parse(srsValues[7], CultureInfo.InvariantCulture)
                         .WithKind(DateTimeKind.Unspecified)
                     : DateTime.Now;
 
-            return card;
+            return new Card(
+                due: cardDue,
+                stability: cardStability,
+                difficulty: cardDifficulty,
+                elapsedDays: cardElapsedDays,
+                scheduledDays: cardScheduledDays,
+                reps: cardReps,
+                lapses: cardLapses,
+                state: cardState,
+                lastReview: cardLastReview
+            );
         }
 
         throw new ArgumentException("Invalid TanaString");

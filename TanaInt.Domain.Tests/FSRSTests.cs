@@ -22,7 +22,7 @@ public class FSRSTests
     [Fact]
     public void Card_State_ShouldEqual0()
     {
-        var card = new Card();
+        var card = new Card(DateTime.UtcNow);
         Assert.Equal(0, (int)card.State);
     }
 
@@ -42,7 +42,6 @@ public class FSRSTests
     public void TestRepeat()
     {
         var f = new FsrsAlgorithm(new Params(maximumInterval: 36500));
-        var cardTest = new Card();
         f.P.W = new double[]
         {
             1.14, 1.01, 5.44, 14.67, 5.3024, 1.5662, 1.2503, 0.0028, 1.5489, 0.1763,
@@ -50,6 +49,7 @@ public class FSRSTests
         };
 
         var now = new DateTime(2022, 11, 29, 12, 30, 0, 0, DateTimeKind.Utc);
+        var cardTest = new Card(now);
         var schedulingCards = f.Repeat(cardTest, now);
 
         var ratings = new Rating[]
@@ -111,7 +111,7 @@ public class FSRSTests
     public void ReviewLog_ElapsedDays_ShouldBeZero_ForNewCards_WhenScheduledDaysIsSet()
     {
         var fsrs = new FsrsAlgorithm(new Params());
-        var card = new Card();
+        var card = new Card(DateTime.UtcNow);
         card.ScheduledDays = 42;
 
         var log = fsrs.Repeat(card, new DateTime(2023, 11, 10, 23, 20, 47, 297, DateTimeKind.Utc));
@@ -124,7 +124,7 @@ public class FSRSTests
     public void ReviewLog_ScheduledDays_ShouldBeZero_ForAgainRatings_IrregardlessOfElapsedDaysSinceLastReview()
     {
         var fsrs = new FsrsAlgorithm(new Params());
-        var card = new Card();
+        var card = new Card(DateTime.UtcNow);
         card.State = State.Learning;
         card.LastReview = new DateTime(2023, 11, 6, 23, 20, 47, 297, DateTimeKind.Utc);
 
