@@ -16,9 +16,12 @@ public class FsrsDto
 
     [JsonIgnore] public Card? Card { get; set; }
 
-    public FsrsDto ParseInput()
+    public FsrsDto ParseInput(DateTime now)
     {
-        Card = Card.FromTanaString(FsrsString);
+        Card = !string.IsNullOrWhiteSpace(FsrsString)
+            ? Card.FromTanaString(FsrsString) 
+            : new Card(now);
+        
         return this;
     }
 }
