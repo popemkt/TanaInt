@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace TanaInt.Domain.Srs.Fsrs;
 
-public class Card
+public partial class Card
 {
     public DateTime Due { get; set; }
     public double Stability { get; set; }
@@ -68,8 +68,7 @@ public class Card
         if (string.IsNullOrWhiteSpace(tanaString))
             throw new ArgumentException($"{nameof(tanaString)} is required");
         
-        var regex = new Regex(@"\[\[date:(.+?)\]\](.+)", RegexOptions.Compiled);
-        var match = regex.Match(tanaString);
+        var match = TanaDateStringRegex().Match(tanaString);
         if (!match.Success)
             throw new ArgumentException("Invalid TanaString");
         
@@ -106,4 +105,7 @@ public class Card
 
     public string ToTanaString() =>
         $"{Utils.FormatTanaDateTime(Due)}/{Stability}/{Difficulty}/{ElapsedDays}/{ScheduledDays}/{Reps}/{Lapses}/{State}/{LastReview:O}";
+
+    [GeneratedRegex(@"\[\[date:(.+?)\]\](.+)", RegexOptions.Compiled)]
+    private static partial Regex TanaDateStringRegex();
 }

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace TanaInt.Domain.WallChanger;
 
-public class BannerChangerDto
+public partial class BannerChangerDto
 {
     public BannerChangerDto(string imagesString)
     {
@@ -22,12 +22,13 @@ public class BannerChangerDto
 
     public static string ParseSingleImageLine(string imageLine)
     {
-        const string pattern = @"\!\[.*?\]\((.*?)\)";
-
-        var match = Regex.Match(imageLine, pattern, RegexOptions.Compiled);
+        var match = TanaImageRegex().Match(imageLine);
         if (!match.Success) return string.Empty;
         
         var imageUrl = match.Groups[1].Value;
         return imageUrl;
     }
+
+    [GeneratedRegex(@"\!\[.*?\]\((.*?)\)", RegexOptions.Compiled)]
+    private static partial Regex TanaImageRegex();
 }
