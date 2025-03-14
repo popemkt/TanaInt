@@ -1,0 +1,20 @@
+# @name wallChanger
+@baseUrl = http://localhost:5000
+
+###
+# Change wallpaper with list of images
+POST {{baseUrl}}/api/change-wall
+Content-Type: application/json
+
+{
+    "imageText": "  - ![banner1](https://example.com/banner1.jpg)\n  - ![banner2](https://example.com/banner2.jpg)\n  - ![banner3](https://example.com/banner3.jpg)"
+}
+
+###
+# Change wallpaper with single image
+POST {{baseUrl}}/api/change-wall
+Content-Type: application/json
+
+{
+    "imageText": "  - ![banner](https://example.com/banner.jpg)"
+}

@@ -28,6 +28,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{48B1945A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TanaInt.Domain.Tests", "TanaInt.Domain.Tests\TanaInt.Domain.Tests.csproj", "{F4292537-6505-43DB-ADF2-A9F4CFFBA220}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Https", "Https", "{C2282209-1BF0-42FB-BA67-2504D2E2E619}"
+	ProjectSection(SolutionItems) = preProject
+		http\calendar-sync.http = http\calendar-sync.http
+		http\collection.http = http\collection.http
+		http\fsrs.http = http\fsrs.http
+		http\rrule.http = http\rrule.http
+		http\wall-changer.http = http\wall-changer.http
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

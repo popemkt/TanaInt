@@ -1,0 +1,58 @@
+# @name fsrsCalculator
+@baseUrl = http://localhost:5000
+
+###
+# New card calculation
+POST {{baseUrl}}/api/fsrs
+Content-Type: application/json
+
+{
+    "fsrsString": null,
+    "fsrsParameters": [0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49],
+    "timezone": "Asia/Bangkok",
+    "requestRetention": 0.9,
+    "maxInterval": 36500,
+    "rating": "Good"
+}
+
+###
+# Review existing card - Good rating
+POST {{baseUrl}}/api/fsrs
+Content-Type: application/json
+
+{
+    "fsrsString": "state=1,due=2024-03-14T09:00:00,stability=0.4,difficulty=0.6,elapsed_days=0,scheduled_days=0,reps=0,lapses=0",
+    "fsrsParameters": [0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49],
+    "timezone": "Asia/Bangkok",
+    "requestRetention": 0.9,
+    "maxInterval": 36500,
+    "rating": "Good"
+}
+
+###
+# Review existing card - Again rating
+POST {{baseUrl}}/api/fsrs
+Content-Type: application/json
+
+{
+    "fsrsString": "state=2,due=2024-03-14T09:00:00,stability=4.93,difficulty=0.94,elapsed_days=1,scheduled_days=1,reps=1,lapses=0",
+    "fsrsParameters": [0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49],
+    "timezone": "Asia/Bangkok",
+    "requestRetention": 0.9,
+    "maxInterval": 36500,
+    "rating": "Again"
+}
+
+###
+# Review existing card - Easy rating
+POST {{baseUrl}}/api/fsrs
+Content-Type: application/json
+
+{
+    "fsrsString": "state=2,due=2024-03-14T09:00:00,stability=4.93,difficulty=0.94,elapsed_days=1,scheduled_days=1,reps=1,lapses=0",
+    "fsrsParameters": [0.4, 0.6, 2.4, 5.8, 4.93, 0.94, 0.86, 0.01, 1.49],
+    "timezone": "Asia/Bangkok",
+    "requestRetention": 0.9,
+    "maxInterval": 36500,
+    "rating": "Easy"
+}

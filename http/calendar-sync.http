@@ -1,0 +1,47 @@
+# @name calendarSync
+@baseUrl = http://localhost:5000
+
+###
+# Sync scheduled task
+POST {{baseUrl}}/api/sync-event
+Content-Type: application/json
+
+{
+    "name": "Team Meeting",
+    "url": "https://app.tana.inc/...",
+    "refString": "ref, event_123",
+    "date": "2024-03-14T15:00:00",
+    "id": null,
+    "doneTime": "",
+    "scheduled": "yes"
+}
+
+###
+# Sync completed task
+POST {{baseUrl}}/api/sync-event
+Content-Type: application/json
+
+{
+    "name": "Review Code",
+    "url": "https://app.tana.inc/...",
+    "refString": "ref, event_456",
+    "date": "2024-03-14T10:00:00",
+    "id": "event_456",
+    "doneTime": "2024-03-14T11:30:00",
+    "scheduled": "yes"
+}
+
+###
+# Sync all-day task
+POST {{baseUrl}}/api/sync-event
+Content-Type: application/json
+
+{
+    "name": "Project Planning Day",
+    "url": "https://app.tana.inc/...",
+    "refString": "ref, event_789",
+    "date": "2024-03-15",
+    "id": null,
+    "doneTime": "",
+    "scheduled": "yes"
+}

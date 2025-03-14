@@ -1,0 +1,32 @@
+# @name rruleCalculator
+@baseUrl = http://localhost:5091
+
+###
+# Calculate next weekly occurrence
+POST {{baseUrl}}/api/next-rrule
+Content-Type: application/json
+
+{
+    "rrule": "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR",
+    "date": "2024-03-14T15:00:00"
+}
+
+###
+# Calculate next monthly occurrence
+POST {{baseUrl}}/api/next-rrule
+Content-Type: application/json
+
+{
+    "rrule": "FREQ=MONTHLY;INTERVAL=1;BYDAY=1MO",
+    "date": "2024-03-14T15:00:00"
+}
+
+###
+# Calculate next yearly occurrence
+POST {{baseUrl}}/api/next-rrule
+Content-Type: application/json
+
+{
+    "rrule": "FREQ=YEARLY;INTERVAL=1;BYMONTH=3",
+    "date": "2024-03-14T15:00:00"
+}
