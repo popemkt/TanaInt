@@ -19,11 +19,41 @@ jobs:
       contents: read
       
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+    
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+    
+    # Cache NuGet packages
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    
+    # Cache .NET build output
+    - name: Cache .NET build
+      uses: actions/cache@v3
+      with:
+        path: |
+          **/bin
+          **/obj
+        key: ${{ runner.os }}-dotnet-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-dotnet-
+    
+    # Cache Lambda tools
+    - name: Cache Lambda tools
+      uses: actions/cache@v3
+      with:
+        path: ~/.dotnet/tools
+        key: ${{ runner.os }}-lambda-tools-${{ hashFiles('global.json', '**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-lambda-tools-
 
     - name: Fill secrets file
       run: |
@@ -32,13 +62,15 @@ jobs:
       env:
         TANAINT_APP_CREDENTIALS: ${{ secrets.TANAINT_APP_CREDENTIALS }}
         MY_USER_TOKEN: ${{ secrets.MY_USER_TOKEN }}
+    
     - name: Restore dependencies
       run: dotnet restore
+    
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --configuration Release
       
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --configuration Release
 
     - name: authenticate and assume aws role
       uses: aws-actions/configure-aws-credentials@v4
@@ -48,6 +80,9 @@ jobs:
         
     - name: Lambda tools install
       run: dotnet tool install -g Amazon.Lambda.Tools
+      # Only install if tool is not already cached
+      continue-on-error: true
+      
     - name: Deploy Lambda
       run: dotnet lambda deploy-serverless --region $AWS_REGION
       working-directory: ./TanaInt.Sam
